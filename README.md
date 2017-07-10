@@ -4,6 +4,8 @@
 
 The missing intervals for the Twitter Util Time library. Feel free to contribute.
 
+    libraryDependencies += "com.madewithtea" %% "twitter-intervals" % "1.0.0-SNAPSHOT" 
+
 ## Example
 
     package com.madewithtea.twitterintervals.Interval
