@@ -21,9 +21,24 @@ import com.twitter.conversions.time._
 import com.twitter.util.{Time, Duration}
 
 class IntervalSpec extends FlatSpec with Matchers { 
+  
   behavior of "Interval intersects"
 
   val TN = Time.now 
+
+  it should "raise exception when one of interval not valid with intersection - a" in {
+    val a = Interval(TN, TN - 1.day)
+    val b = Interval(TN, TN + 1.day)
+
+    an[InvalidInterval] should be thrownBy Interval.intersects(a,b) 
+  }
+
+  it should "raise exception when one of interval not valid with intersection - b" in {
+    val a = Interval(TN, TN - 1.day)
+    val b = Interval(TN, TN + 1.day)
+
+    an[InvalidInterval] should be thrownBy Interval.intersects(b,a) 
+  }
 
   it should "a,b should intersect, when b in a" in { 
     val a = Interval(TN, TN + 1.day)
@@ -97,6 +112,21 @@ class IntervalSpec extends FlatSpec with Matchers {
 
     Interval.minus(a,b) shouldEqual Set(c,d)
   }
+
+  it should "raise exception when one of interval not valid with minus - a" in {
+    val a = Interval(TN, TN - 1.day)
+    val b = Interval(TN, TN + 1.day)
+
+    an[InvalidInterval] should be thrownBy Interval.minus(a,b) 
+  }
+
+  it should "raise exception when one of interval not valid with minus - b" in {
+    val a = Interval(TN, TN - 1.day)
+    val b = Interval(TN, TN + 1.day)
+
+    an[InvalidInterval] should be thrownBy Interval.minus(b,a) 
+  }
+
 
 }
 
