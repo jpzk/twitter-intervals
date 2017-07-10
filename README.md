@@ -6,9 +6,9 @@ The missing intervals for the Twitter Util Time library. Feel free to contribute
 
 ## Example
 
-  package com.madewithtea.twitterintervals.Interval
+    package com.madewithtea.twitterintervals.Interval
 
-  val intervalA = Interval(Time.now, Time.now + 1.day)
-  val intervalB = Interval(Time.now + 1.hour, Time.now + day)
-  Interval.minus(intervalA, intervalB)
+    val intervalA = Interval(Time.now, Time.now + 1.day)
+    val intervalB = Interval(Time.now + 1.hour, Time.now + day)
+    Interval.minus(intervalA, intervalB)
 
