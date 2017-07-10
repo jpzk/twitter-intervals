@@ -37,7 +37,7 @@ publishArtifact in Test := false
 pomIncludeRepository := { _ => false }
 
 pomExtra := (
-  <url>https://github.com/jpzk/twitter-time-intervals</url>
+  <url>https://github.com/jpzk/twitter-intervals</url>
     <licenses>
       <license>
         <name>Apache License Version 2.0</name>
@@ -46,8 +46,8 @@ pomExtra := (
       </license>
     </licenses>
     <scm>
-      <url>git@github.com:jpzk/twitter-time-intervals.git</url>
-      <connection>scm:git:git@github.com:jpzk/twitter-time-intervals.git</connection>
+      <url>git@github.com:jpzk/twitter-intervals.git</url>
+      <connection>scm:git:git@github.com:jpzk/twitter-intervals.git</connection>
     </scm>
     <developers>
       <developer>
