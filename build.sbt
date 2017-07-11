@@ -1,7 +1,7 @@
 
 lazy val commonSettings = Seq(
   organization := "com.madewithtea",
-  version := "0.5.0",
+  version := "0.6.0",
   scalaVersion := "2.12.1",
   crossScalaVersions := Seq("2.12.2","2.11.11"),
   description := "Intervals for Twitter Util Time",

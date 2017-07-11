@@ -8,7 +8,7 @@ The missing intervals for the [Twitter Util](https://github.com/twitter/util) li
 
 Available on Maven Central Repositories
 
-    libraryDependencies += "com.madewithtea" %% "twitterintervals" % "0.5.0" 
+    libraryDependencies += "com.madewithtea" %% "twitterintervals" % "0.6.0" 
 
 ## Example
  
