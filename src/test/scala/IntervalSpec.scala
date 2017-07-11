@@ -40,6 +40,14 @@ class IntervalSpec extends FlatSpec with Matchers {
     an[InvalidInterval] should be thrownBy Interval.intersects(b,a) 
   }
 
+  it should "a,b should intersection, when a = b" in {
+    val a = Interval(TN, TN + 1.day)
+    val b = Interval(TN, TN + 1.day) 
+
+    // should intersect
+    Interval.intersects(a,b) shouldEqual true
+  }
+
   it should "a,b should intersect, when b in a" in { 
     val a = Interval(TN, TN + 1.day)
     val b = Interval(TN + 1.hour, TN + 1.hour) 

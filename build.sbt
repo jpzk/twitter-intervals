@@ -13,7 +13,7 @@ val twitterVersion = "6.40.0"
 lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
 lazy val twitterUtilCore = "com.twitter" %% "util-core" % twitterVersion
 
-lazy val twitterIntervals = (project in file(".")).
+lazy val twitterintervals = (project in file(".")).
   settings(commonSettings: _*).
   settings(
     libraryDependencies ++= Seq(
