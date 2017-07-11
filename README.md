@@ -7,10 +7,14 @@ The missing intervals for the Twitter Util Time library. Feel free to contribute
     libraryDependencies += "com.madewithtea" %% "twitter-intervals" % "1.0.0-SNAPSHOT" 
 
 ## Example
+    
+    import com.madewithtea.twitterintervals.Interval
+    import com.twitter.util.{Time, Duration}
 
-    package com.madewithtea.twitterintervals.Interval
+    val TN = Time.now
+    val a = Interval(TN, TN + 1.day)
+    val b = Interval(TN + 1.hour, TN + 1.day)
 
-    val intervalA = Interval(Time.now, Time.now + 1.day)
-    val intervalB = Interval(Time.now + 1.hour, Time.now + day)
-    Interval.minus(intervalA, intervalB)
-
+    a intersects b shouldEqual true 
+    a minus b shouldEqual Interval(TN, TN + 1.hour)
+    a.duration shouldEqual 1.day
