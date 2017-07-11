@@ -36,6 +36,17 @@ class IntervalSpec extends FlatSpec with Matchers {
     a equal b shouldEqual true
   }
 
+  it should "not equal other Interval" in {
+    val a = Interval(TN, TN + 1.day)
+    val b = Interval(TN, TN + 2.day)
+    a equal b shouldEqual false
+  }
+
+  it should "have string representation" in {
+    val a = Interval(Time.Zero, Time.Zero + 1.day)
+    a.toString shouldEqual "1970-01-01 00:00:00 +0000 1970-01-02 00:00:00 +0000"
+  }
+
   behavior of "Intersection"
 
   val TN = Time.now 

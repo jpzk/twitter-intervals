@@ -12,14 +12,13 @@ The missing intervals for the Twitter Util Time library. Feel free to contribute
     import com.madewithtea.twitterintervals.Interval
     import com.twitter.util.{Time, Duration}
 
-    val TN = Time.now
-    val a = Interval(TN, TN + 1.day)
-    val b = Interval(TN + 1.hour, TN + 1.day)
+    val a = Interval(Time.Zero, Time.Zero + 1.day)
+    val b = Interval(Time.Zero + 1.hour, Time.Zero + 1.day)
 
     a intersects b shouldEqual true 
 
     // returning intersection intervals as Set of intervals
-    a minus b shouldEqual Set(Interval(TN, TN + 1.hour))
+    a minus b shouldEqual Set(Interval(Time.Zero, Time.Zero + 1.hour))
 
     // can be empty
     a minus a shouldEqual Set()
