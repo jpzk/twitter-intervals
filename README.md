@@ -16,5 +16,14 @@ The missing intervals for the Twitter Util Time library. Feel free to contribute
     val b = Interval(TN + 1.hour, TN + 1.day)
 
     a intersects b shouldEqual true 
-    a minus b shouldEqual Interval(TN, TN + 1.hour)
+
+    // returning intersection intervals as Set of intervals
+    a minus b shouldEqual Set(Interval(TN, TN + 1.hour))
+
+    // can be empty
+    a minus a shouldEqual Set()
+
+    // using Twitter Time and Duration with Intervals
     a.duration shouldEqual 1.day
+
+    
