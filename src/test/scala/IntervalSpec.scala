@@ -34,12 +34,14 @@ class IntervalSpec extends FlatSpec with Matchers {
     val a = Interval(TN, TN + 1.day)
     val b = a 
     a equal b shouldEqual true
+    a == b shouldEqual true
   }
 
   it should "not equal other Interval" in {
     val a = Interval(TN, TN + 1.day)
     val b = Interval(TN, TN + 2.day)
     a equal b shouldEqual false
+    a == b shouldEqual false
   }
 
   it should "have string representation" in {
