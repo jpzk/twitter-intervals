@@ -27,23 +27,19 @@ object Interval {
     (b.start < a.start) && (b.end > a.start) 
   
   def inside(a: Interval, b: Interval) = 
-    (b.start > a.start) && (a.end > b.end)
+    (b.start >= a.start) && (a.end >= b.end)
   
   def endOverlap(a: Interval, b: Interval) =
-    (a.start < b.start) && (b.end > a.end) && (b.start < a.end)
+    (a.start <= b.start) && (b.end > a.end) && (b.start < a.end)
   
   def isValid[A](a: Interval, b: Interval)(f: => A) = 
     if(a.start > a.end || b.start > b.end) throw InvalidInterval() else f
-  
-  def equal(a: Interval, b: Interval) = 
-    (a.start == b.start && a.end == b.end)
-  
+ 
   // check if interval b intersects interval a
   def intersects(a: Interval, b: Interval) = isValid(a,b) { (a,b) match {
     case (a,b) if beforeOverlap(a,b) => true
     case (a,b) if inside(a,b) => true
     case (a,b) if endOverlap(a,b) => true 
-    case (a,b) if equal(a,b) => true
     case _ => false
   }}
   

@@ -25,6 +25,11 @@ class IntervalSpec extends FlatSpec with Matchers {
   behavior of "Interval intersects"
 
   val TN = Time.now 
+  
+  def shouldIntersect(a: Interval, b: Interval, intersect: Boolean) = {
+    Interval.intersects(a,b) shouldEqual intersect 
+    Interval.intersects(b,a) shouldEqual intersect
+  }
 
   it should "raise exception when one of interval not valid with intersection - a" in {
     val a = Interval(TN, TN - 1.day)
@@ -43,98 +48,101 @@ class IntervalSpec extends FlatSpec with Matchers {
   it should "a,b should intersection, when a = b" in {
     val a = Interval(TN, TN + 1.day)
     val b = Interval(TN, TN + 1.day) 
-
-    // should intersect
-    Interval.intersects(a,b) shouldEqual true
+    shouldIntersect(a,b,true)
   }
 
   it should "a,b should intersect, when b in a" in { 
     val a = Interval(TN, TN + 1.day)
     val b = Interval(TN + 1.hour, TN + 1.hour) 
+    shouldIntersect(a,b,true)
+  }
 
-    // should intersect
-    Interval.intersects(a,b) shouldEqual true
+  it should "a,b should intersect, when b in a, starts at the same time" in { 
+    val a = Interval(TN, TN + 1.day)
+    val b = Interval(TN, TN + 1.hour) 
+    shouldIntersect(a,b,true)
+  }
+
+  it should "a,b should intersect, when b in a, ends at the same time" in {
+    val a = Interval(TN, TN + 1.day)
+    val b = Interval(TN + 1.hour, TN + 1.day) 
+    shouldIntersect(a,b,true)
   }
 
   it should "a,b should intersect, when b start in a" in { 
     val a = Interval(TN, TN + 1.day)
     val b = Interval(TN + 1.hour, TN + 2.days) 
+    shouldIntersect(a,b,true)
+  }
 
-    // should intersect
-    Interval.intersects(a,b) shouldEqual true
+  it should "a,b should intersect, when b start at a start" in {
+    val a = Interval(TN, TN + 1.day)
+    val b = Interval(TN, TN + 2.days) 
+    shouldIntersect(a,b,true)
   }
 
   it should "a,b should intersect, when b end in a" in { 
     val a = Interval(TN, TN + 1.day)
     val b = Interval(TN - 1.day, TN + 1.hour) 
+    shouldIntersect(a,b,true)
+  }
 
-    // should intersect
-    Interval.intersects(a,b) shouldEqual true
+  it should "a,b should intersect, when b end in a end" in {
+    val a = Interval(TN, TN + 1.day)
+    val b = Interval(TN - 1.day, TN + 1.day) 
+    shouldIntersect(a,b,true)
   }
 
   it should "a,b should not intersect, when b behind a" in { 
     val a = Interval(TN, TN + 1.day)
     val b = Interval(TN + 2.days, TN + 3.days) 
-
-    // should not intersect
-    Interval.intersects(a,b) shouldEqual false 
+    shouldIntersect(a,b,false) 
   }
 
   it should "a,b should not intersect, when b before a" in { 
     val a = Interval(TN, TN + 1.day)
     val b = Interval(TN - 1.day, TN - 1.hour) 
-
-    // should not intersect
-    Interval.intersects(a,b) shouldEqual false 
+    shouldIntersect(a,b,false) 
   }
 
   behavior of "Interval minus"
-
+  
   it should "return empty set when b does not intersect a" in { 
     val a = Interval(TN, TN + 1.day)
     val b = Interval(TN - 1.day, TN - 1.hour) 
-
     Interval.minus(a,b) shouldEqual Set()  
   }
 
   it should "return intersection when b before overlaps a" in { 
     val a = Interval(TN, TN + 2.day)
     val b = Interval(TN - 1.day, TN + 1.day)
-
     Interval.minus(a,b) shouldEqual Set(Interval(TN + 1.day, TN + 2.day))
   }
 
   it should "return intersection when b end overlaps a" in { 
     val a = Interval(TN, TN + 2.day)
     val b = Interval(TN + 1.day, TN + 3.day)
-
     Interval.minus(a,b) shouldEqual Set(Interval(TN, TN + 1.day))
   }
 
   it should "return intersections when b inside a" in { 
     val a = Interval(TN, TN + 2.day)
     val b = Interval(TN + 1.hour, TN + 1.day)
-
     val c = Interval(TN, TN + 1.hour)
     val d = Interval(TN + 1.day, TN + 2.day)
-
     Interval.minus(a,b) shouldEqual Set(c,d)
   }
 
   it should "raise exception when one of interval not valid with minus - a" in {
     val a = Interval(TN, TN - 1.day)
     val b = Interval(TN, TN + 1.day)
-
     an[InvalidInterval] should be thrownBy Interval.minus(a,b) 
   }
 
   it should "raise exception when one of interval not valid with minus - b" in {
     val a = Interval(TN, TN - 1.day)
     val b = Interval(TN, TN + 1.day)
-
     an[InvalidInterval] should be thrownBy Interval.minus(b,a) 
   }
-
-
 }
 
