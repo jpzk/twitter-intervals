@@ -7,7 +7,8 @@ The missing intervals for the Twitter Util Time library. Feel free to contribute
     libraryDependencies += "com.madewithtea" %% "twitter-intervals" % "1.0.0-SNAPSHOT" 
 
 ## Example
-    
+ 
+    import com.twitter.conversions.time._
     import com.madewithtea.twitterintervals.Interval
     import com.twitter.util.{Time, Duration}
 
@@ -23,7 +24,7 @@ The missing intervals for the Twitter Util Time library. Feel free to contribute
     // can be empty
     a minus a shouldEqual Set()
 
-    // using Twitter Time and Duration with Intervals
+    // using Twitter Time and Duration (conversions) with Intervals
     a.duration shouldEqual 1.day
 
     
