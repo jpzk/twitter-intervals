@@ -25,6 +25,13 @@ class IntervalSpec extends FlatSpec with Matchers {
 
   behavior of "Properties"
 
+  val TN = Time.now 
+ 
+  def shouldIntersect(a: Interval, b: Interval, intersect: Boolean) = {
+    a intersects b shouldEqual intersect 
+    b intersects a shouldEqual intersect
+  }
+ 
   it should "have right durations" in {
     val a = Interval(TN, TN + 1.day)
     a.duration shouldEqual 1.day
@@ -49,14 +56,21 @@ class IntervalSpec extends FlatSpec with Matchers {
     a.toString shouldEqual "1970-01-01 00:00:00 +0000 1970-01-02 00:00:00 +0000"
   }
 
-  behavior of "Intersection"
+  behavior of "Union"
 
-  val TN = Time.now 
-  
-  def shouldIntersect(a: Interval, b: Interval, intersect: Boolean) = {
-    a intersects b shouldEqual intersect 
-    b intersects a shouldEqual intersect
+  it should "a,b should union" in {
+    val a = Interval(TN, TN + 1.day)
+    val b = Interval(TN, TN + 2.day)
+    a union b shouldEqual Interval(TN, TN + 2.day)
   }
+
+  it should "a,b (not intersecting) union should raise exception" in {
+    val a = Interval(TN, TN + 1.day)
+    val b = Interval(TN + 2.day, TN + 3.day)
+    an[CannotUnionMustIntersect] should be thrownBy (a union b)
+  }
+
+  behavior of "Intersection"
 
   it should "a,b should intersection, when a = b" in {
     val a = Interval(TN, TN + 1.day)

@@ -23,6 +23,9 @@ object Interval {
 
   case class InvalidInterval() extends Exception(
     "end < start or end == start is not a valid interval")
+
+  case class CannotUnionMustIntersect() extends Exception(
+    "intervals are not intersecting")
 }
 
 sealed class Interval(val start: Time, val end: Time) {
@@ -45,6 +48,14 @@ sealed class Interval(val start: Time, val end: Time) {
     case _ => false
   }
   
+  def union(b: Interval): Interval = {
+    if(!(this intersects b)) 
+      throw CannotUnionMustIntersect()
+    val start = if (this.start < b.start) this.start else b.start
+    val end = if (this.end > b.end) this.end else b.end
+    Interval(start, end)
+  }
+
   def minus(b: Interval): Set[Interval] = b match {
     case b if beforeOverlap(b) => Set(Interval(b.end, this.end)) 
     case b if inside(b) => Set(Interval(this.start, b.start), Interval(b.end, this.end))
