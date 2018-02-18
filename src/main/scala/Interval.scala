@@ -30,7 +30,7 @@ object Interval {
 
 sealed class Interval(val start: Time, val end: Time) {
   import Interval._
-  if(start > end) throw InvalidInterval() 
+  if(start > end) throw InvalidInterval()
 
   override def toString = s"$start $end"
 
@@ -57,9 +57,9 @@ sealed class Interval(val start: Time, val end: Time) {
   }
 
   def minus(b: Interval): Set[Interval] = b match {
+    case b if !intersects(b) => Set(this)
     case b if beforeOverlap(b) => Set(Interval(b.end, this.end)) 
     case b if inside(b) => Set(Interval(this.start, b.start), Interval(b.end, this.end))
-    case b if overlap(b) => Set(Interval(b.start, this.start), Interval(this.end, b.end))
     case b if endOverlap(b) => Set(Interval(this.start, b.start))
     case _ => Set[Interval]()
   }

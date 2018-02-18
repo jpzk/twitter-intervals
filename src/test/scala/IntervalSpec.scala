@@ -134,10 +134,10 @@ class IntervalSpec extends FlatSpec with Matchers {
 
   behavior of "Minus"
   
-  it should "return empty set when b does not intersect a" in { 
+  it should "return a when b does not intersect a" in {
     val a = Interval(TN, TN + 1.day)
     val b = Interval(TN - 1.day, TN - 1.hour) 
-    a minus b shouldEqual Set()  
+    a minus b shouldEqual Set(Interval(TN, TN + 1.day))
   }
 
   it should "return empty set when b = a" in {
@@ -166,12 +166,9 @@ class IntervalSpec extends FlatSpec with Matchers {
     a minus b shouldEqual Set(c,d)
   }
 
-  it should "return intersections when a inside b" in {
-    val a = Interval(TN, TN + 2.day)
-    val b = Interval(TN + 1.hour, TN + 1.day)
-    val c = Interval(TN, TN + 1.hour)
-    val d = Interval(TN + 1.day, TN + 2.day)
-    b minus a shouldEqual Set(c,d)
+  it should "return empty set when b overlaps a" in {
+    val a = Interval(TN + 1.hour, TN + 1.day)
+    val b = Interval(TN, TN + 2.day)
+    a minus b shouldEqual Set()
   }
 }
-
